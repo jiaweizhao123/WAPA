@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sazkuyo.ultrawallpaper2.Mapper.UtilMapper">
+    <select id="queryIpRecord" resultType="Integer" parameterType="String">
+        select count(*) from visit_chart where adr=#{ip}
+    </select>
+    <insert id="insertIpRecord" parameterType="String">
+        insert into visit_chart(adr) values(#{adr})
+    </insert>
+    <update id="addCount" parameterType="String">
+        update visit_chart set visit_num=visit_num+1 where adr=#{ip}
+    </update>
+    <!--查询访客总数-->
+    <select id="queryVisitorCount" resultType="Integer">
+        select count(*) from visit_chart
+    </select>
+</mapper>

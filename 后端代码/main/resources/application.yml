@@ -1,0 +1,22 @@
+server:
+  port: 80
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 200MB
+  datasource:
+    url: jdbc:mysql://issazkuyo.mysql.rds.aliyuncs.com:3306/ultrawallpaper?&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: sazkuyo
+    password: A77820101a
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+mybatis:
+  mapper-locations: classpath:/Mapper/*Mapper.xml
+  type-aliases-package: com.sazkuyo.ultrawallpaper2.Entity
+file:
+  staticAccessPath: /wallpaper/**
+  uploadFolder: /static/

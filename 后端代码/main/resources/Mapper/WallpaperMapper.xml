@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sazkuyo.ultrawallpaper2.Mapper.WallpaperMapper">
+
+    <!--查找所有图片-->
+    <select id="queryAll" resultType="Wallpaper">
+        select * from wallpaper
+    </select>
+
+    <!--查找指定类别下所有图片-->
+    <select id="queryByCategory" resultType="Wallpaper" parameterType="Integer">
+        select * from wallpaper where cid=#{cid}
+    </select>
+    <!--查找指定尺寸图片-->
+    <select id="queryBySize" parameterType="String" resultType="Wallpaper">
+        select * from wallpaper where size=#{size}
+    </select>
+    <!--插入图片-->
+    <insert id="insert" parameterType="Wallpaper">
+        insert into wallpaper(heat,pdate,recommended,cid,size,src,sm_src,tag)
+        values(0,#{pdate},0,#{cid},"---",#{src},#{sm_src},#{tag})
+    </insert>
+    <!--删除图片-->
+    <delete id="delete" parameterType="Wallpaper">
+        delete from wallpaper where pid=#{pid}
+    </delete>
+    <!--更新图片-->
+    <update id="update" parameterType="Wallpaper">
+        update wallpaper set recommended=#{recommended} , size=#{size} , tag=#{tag} where pid=#{pid}
+    </update>
+    <!--根据时间降序查找图片-->
+    <select id="queryAllOrderByTime" resultType="Wallpaper">
+        select * from wallpaper order by pdate desc, pid desc limit #{param1},#{param2}
+    </select>
+    <!--根据时间降序查找特定类别图片-->
+    <select id="queryByCategoryOrderByTime" parameterType="Integer" resultType="Wallpaper">
+        select * from wallpaper where cid=#{param1} order by pdate desc, pid desc limit #{param2},#{param3}
+    </select>
+    <!--根据时间降序查找特定尺寸图片-->
+    <select id="queryBySizeOrderByTime" parameterType="String" resultType="Wallpaper">
+        select * from wallpaper where size=#{size} order by pdate desc
+    </select>
+    <!--根据热度降序查找所有图片-->
+    <select id="queryAllOrderByHeat" resultType="Wallpaper">
+        select * from wallpaper order by heat desc, pid desc limit #{param1},#{param2}
+    </select>
+    <!--根据热度降序查找特定类别图片-->
+    <select id="queryByCategoryOrderByHeat" resultType="Wallpaper" parameterType="Integer">
+        select * from wallpaper where cid=#{cid} order by heat desc
+    </select>
+    <!--根据热度降序查找特定尺寸图片-->
+    <select id="queryBySizeOrderByHeat" parameterType="String" resultType="Wallpaper">
+        select * from wallpaper where size=#{size} order by heat desc
+    </select>
+    <!--根据页数返回图片-->
+    <select id="queryAllByLimit" resultType="Wallpaper" parameterType="Integer">
+        select * from wallpaper limit #{param1},#{param2}
+    </select>
+    <!--根据关键词查找图片-->
+    <select id="searchByKeyWord" resultType="Wallpaper">
+        select * from wallpaper where tag like '%${param1}%' limit #{param2},#{param3}
+    </select>
+    <!--根据关键词查找手机图片-->
+    <select id="searchPhoneByKeyWord" resultType="Wallpaper">
+        select * from wallpaper_phone where tag like '%${param1}%' limit #{param2},#{param3}
+    </select>
+    <!--喜爱图片-->
+    <update id="favorite" parameterType="Integer">
+        update wallpaper set heat=heat+1 where pid=#{pid}
+    </update>
+    <!--查询是否重复投票-->
+    <select id="isFavorited" resultType="Integer">
+        select count(*) from favorite_record where ip=#{param1} and pid=#{param2}
+    </select>
+    <!--创建用户喜爱记录-->
+    <insert id="create_record">
+        insert into favorite_record (ip,pid) values (#{param1},#{param2})
+    </insert>
+    <!--随机取图-->
+    <select id="getRandomWallpaper" parameterType="Integer" resultType="Wallpaper">
+        SELECT * FROM wallpaper AS t1 JOIN (SELECT ROUND(RAND() * ((SELECT MAX(pid) FROM wallpaper)-(SELECT MIN(pid)
+        FROM wallpaper))+(SELECT MIN(pid) FROM wallpaper)) AS pid) AS t2
+        WHERE t1.pid >= t2.pid and not t1.pid=#{pid} and not t2.pid=#{pid}
+        ORDER BY t1.pid LIMIT 1;
+    </select>
+    <!--手机随机取图-->
+    <select id="getRandomWallpaperByPhone" parameterType="Integer" resultType="Wallpaper">
+        SELECT * FROM wallpaper_phone AS t1 JOIN (SELECT ROUND(RAND() * ((SELECT MAX(pid) FROM wallpaper_phone)-(SELECT
+        MIN(pid) FROM wallpaper_phone))+(SELECT MIN(pid) FROM wallpaper_phone)) AS pid) AS t2
+        WHERE t1.pid >= t2.pid and not t1.pid=#{pid} and not t2.pid=#{pid} and not t1.cid=7 and not t1.cid=8
+        ORDER BY t1.pid LIMIT 1;
+    </select>
+    <!--手机端随机取图-->
+    <select id="getRandomPhoneWallpaper" parameterType="Integer" resultType="Wallpaper">
+        SELECT * FROM wallpaper_phone AS t1 JOIN (SELECT ROUND(RAND() * ((SELECT MAX(pid) FROM wallpaper_phone)-(SELECT
+        MIN(pid) FROM wallpaper_phone))+(SELECT MIN(pid) FROM wallpaper_phone)) AS pid) AS t2
+        WHERE t1.pid >= t2.pid and not t1.pid=#{pid} and not t2.pid=#{pid}
+        ORDER BY t1.pid LIMIT 1;
+    </select>
+    <!--插入手机图片-->
+    <insert id="insertPhone" parameterType="Wallpaper">
+        insert into wallpaper_Phone(heat,pdate,recommended,cid,size,src,sm_src,tag)
+        values(0,#{pdate},0,#{cid},"---",#{src},#{sm_src},#{tag})
+    </insert>
+    <!--删除手机图片-->
+    <delete id="deletePhone" parameterType="Wallpaper">
+        delete from wallpaper_phone where pid=#{pid}
+    </delete>
+    <!--更新手机图片-->
+    <update id="updatePhone" parameterType="Wallpaper">
+        delete from wallpaper_Phone where pid=#{pid}
+    </update>
+    <!--查询所有手机图片-->
+    <select id="queryPhoneAllOrderByTime" resultType="Wallpaper">
+        select * from wallpaper_phone order by pdate desc, pid desc
+    </select>
+    <!--根据时间降序查找特定类别手机图片-->
+    <select id="queryPhoneByCategoryOrderByTime" parameterType="Integer" resultType="Wallpaper">
+        select * from wallpaper_Phone where cid=#{param1} order by pdate desc, pid desc limit #{param2},#{param3}
+    </select>
+    <!--根据部分展示特定类别手机图片-->
+    <select id="simpleQueryPhoneByCategory" parameterType="Integer" resultType="Wallpaper">
+        select * from wallpaper_phone where cid=#{param1} order by pdate desc, pid desc limit 0,5
+    </select>
+    <!--根据部分展示特定类别图片-->
+    <select id="simpleQueryByCategory" parameterType="Integer" resultType="Wallpaper">
+        select * from wallpaper where cid=#{param1} order by pdate desc, pid desc limit 0,5
+    </select>
+
+    <!--查询是否存在该搜索记录-->
+    <select id="isRecordExist" parameterType="String" resultType="Integer">
+        select count(*) from search_record where keyword = #{keyword}
+    </select>
+    <!--插入搜索记录-->
+    <insert id="insertRecord" parameterType="String">
+        insert into search_record(keyword,num) values(#{keyword},1)
+    </insert>
+    <!--搜索记录次数自增-->
+    <update id="addRecordNum" parameterType="String">
+        update search_record set num = num+1 where keyword = #{keyword}
+    </update>
+    <!--返回热门搜索-->
+    <select id="getTopRecord" resultType="SearchRecord">
+        select * from search_record order by num desc limit 0,10
+    </select>
+    <!--获取图片总数-->
+    <select id="getWallpaperCount" resultType="Integer">
+        select count(*) from wallpaper
+    </select>
+    <!--获取最高热度-->
+    <select id="getMaxHeat" resultType="Integer">
+        select max(heat) from wallpaper
+    </select>
+
+    <!--获取总热度-->
+    <select id="getAllHeat" resultType="Integer">
+        select sum(heat) from wallpaper
+    </select>
+
+    <!--用户上传推荐图片-->
+    <insert id="insertUserWallpaper" parameterType="userWallpaper">
+        insert into userWallpaper(src,sm_src,uid,create_time,recommend,tags)
+        values(#{src},#{sm_src},#{uid},#{create_time},0,#{tags})
+    </insert>
+
+    <!--审核通过用户推荐图片-->
+    <update id="allow" parameterType="userWallpaper">
+        update userWallpaper set recommend=1 where id = #{id}
+    </update>
+    <!--用户点赞-->
+    <update id="liked" parameterType="Integer">
+        update userWallpaper set heat=heat+1 where id=#{id}
+    </update>
+    <!--获取所有用户推荐图片-->
+    <select id="getAll" resultType="userWallpaper" parameterType="Integer">
+        select * from userWallpaper limit #{param1} , #{param2}
+    </select>
+    <!--获取审核通过的用户推荐图片-->
+    <select id="queryLimitByRecommend" parameterType="Integer">
+        select * from userWallpaper where recommend=1 limit #{param1} , #{param2}
+    </select>
+    <!--返回时间降序的用户推荐图片-->
+    <select id="queryUWByTime" parameterType="Integer" resultType="userWallpaper">
+        select * from userWallpaper where recommend=1 order by create_time desc , id desc limit #{param1} , #{param2}
+    </select>
+    <!--按热度降序返回用户推荐图片-->
+    <select id="queryUWByHeat" resultType="userWallpaper" parameterType="Integer">
+        select * from userWallpaper where recommend=1 order by heat desc , id desc limit #{param1} , #{param2}
+    </select>
+    <!--删除指定用户推荐图片-->
+    <delete id="deleteUw" parameterType="Integer">
+        delete from userWallpaper where id=#{id}
+    </delete>
+    <!--更新用户推荐图片-->
+    <update id="updateUw" parameterType="userWallpaper">
+        update userWallpaper set tags=#{tags} , recommend=#{recommend} where id=#{id}
+    </update>
+</mapper>
