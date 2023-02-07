@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.js" type="text/jscript" charset="UTF-8"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<link href="css/bootstrap.css" rel="stylesheet"/>
+		<style>
+			.ani-con{
+				width: 100%;
+				height: 100%;
+				background-color: hsla(0, 20%, 10%, 0.7);
+			}
+			.container{
+				width: 11.9vw;
+				height: 40vh;
+				/* border: 1px solid #fff; */
+				position: relative;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+			}
+			.img_con{
+				width: 32vw;
+				height: 40vh;
+				border: 1px solid #000;
+				display: inline-block;
+			}
+			.stroke{
+				position: relative;
+				width: 20%;
+				height: 8vh;
+				border-radius: 4vh;
+				position: absolute;
+				transform: translateY(18vh);
+				animation: load 1s;
+				animation-iteration-count: infinite;
+			}
+			.stroke-1{
+				background-color: rgb(144, 26, 223);
+				animation-delay: 0ms;
+			}
+			.stroke-2{
+				background-color: rgb(13, 105, 218);
+				left:4.5vw;
+				animation-delay: 250ms;
+			}
+			.stroke-3{
+				background-color: #fff;
+				left:7.9vw;
+				animation-delay: 450ms;
+			}
+			@keyframes load{
+				0%{height: 8vh;transform: translateY(16vh);}
+				40%{height: 20vh;transform: translateY(10vh);}
+				50%{height: 40vh;transform: translateY(0vh);}
+				90%{height: 20vh;transform: translateY(10vh);}
+				100%{height: 8vh;transform: translateY(16vh);}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" onloadstart="loadStart()">
+			
+			 <div class="img_con">
+				 <div class="ani-con" v-show="flags[0]">
+				 	<div class="container">
+				 		<div class="stroke-1 stroke"></div>
+				 		<div class="stroke-2 stroke"></div>
+				 		<div class="stroke-3 stroke"></div>
+				 	</div>
+				  </div>
+			 </div>
+			 <div class="img_con" style="background: url(img/bk1.jpg) no-repeat;background-size: cover;">
+			 				 <div class="ani-con" v-show="flags[1]">
+			 				 	<div class="container">
+			 				 		<div class="stroke-1 stroke"></div>
+			 				 		<div class="stroke-2 stroke"></div>
+			 				 		<div class="stroke-3 stroke"></div>
+			 				 	</div>
+			 				  </div>
+			 </div>
+			 <div class="img_con">
+			 				 <div class="ani-con" v-show="flags[2]">
+			 				 	<div class="container">
+			 				 		<div class="stroke-1 stroke"></div>
+			 				 		<div class="stroke-2 stroke"></div>
+			 				 		<div class="stroke-3 stroke"></div>
+			 				 	</div>
+			 				  </div>
+			 </div>
+			 <div class="img_con">
+				 <div class="ani-con" v-show="flags[3]">
+					<div class="container">
+						<div class="stroke-1 stroke"></div>
+						<div class="stroke-2 stroke"></div>
+						<div class="stroke-3 stroke"></div>
+					</div>
+				  </div>
+			 </div>
+			 <div class="img_con">
+			 				 <div class="ani-con" v-show="flags[4]">
+			 				 	<div class="container">
+			 				 		<div class="stroke-1 stroke"></div>
+			 				 		<div class="stroke-2 stroke"></div>
+			 				 		<div class="stroke-3 stroke"></div>
+			 				 	</div>
+			 				  </div>
+			 </div>
+			<form action="http://42.240.141.211/WallpaperController/insert" method="post" enctype="multipart/form-data">
+				<input type="text" name="heat"/>
+				<input type="text" name="cid"/>
+				<input type="text" name="recommended"/>
+				<input type="text" name="size"/>
+				<input type="file"  name="uploadfile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"/>
+				<input type="submit" value="提交"/>
+			</form>
+			<button @click="testAxios()">click</button>
+		</div>
+		<a href="http://qiniu-ultraer-icu-idvhk62.qiniudns.com/febd894e-6149-4805-803d-5f76c0ae3427.png" download target="_blank">下载</a>
+		<script>
+			Vue.component('imgShow',{
+				template:`
+					<div class="img_con">
+						 <div class="ani-con" v-show="flags[3]">
+							<div class="container">
+								<div class="stroke-1 stroke"></div>
+								<div class="stroke-2 stroke"></div>
+								<div class="stroke-3 stroke"></div>
+							</div>
+						  </div>
+					</div>
+				`,
+			});
+			const vm = new Vue({
+				el: "#app",
+				data: {
+					flags: [true,true,true,true,true],
+					timelist: [1,2,1.5,1.2,0.5,3.5]
+				},
+				mounted() {
+					_this = this;
+					setTimeout(()=>{
+						console.log('test');
+						_this.flags[0] = false;
+					},1000)
+				},
+				methods:{
+					testAxios(){
+						axios.put('http://localhost:8888/demo-12/download/111.do');
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

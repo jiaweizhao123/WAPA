@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="css/manager.css" rel="stylesheet"/>
+		<meta http-equiv="content-Type" content="=text/html; charset=utf-8"/>
+		<title>Ultra-简单的壁纸网站</title>
+		<link rel="icon" href="img/title.ico" type="image/x-icon">
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.js" type="text/jscript" charset="UTF-8"></script>
+		<script src="js/axios.min.js"></script>
+		<link href="css/bootstrap.css" rel="stylesheet"/>
+		<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+	</head>
+	<body>
+	<div id="app">
+		<div class="leftMenu">
+			<div id="topTitle"><h4>管理页</h4></div>
+			<div class="selection" v-for="(item,index) in btn_list" :key="index" @click="change(index)">
+				<h5>{{item}}</h5>
+			</div>
+		</div>
+		<div class="containers" id="home">
+			<div class="titleItem">
+				<h4>首页</h4>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem SModuleItem_left">
+					<div class="module_title"><h5>用户数据</h5></div>
+					<div class="module_con">
+						<div class="module_con_item module_con_left">
+							<div class="sub_title">用户总数</div>
+							<div class="data_show">
+								当前用户:{{accountCount}}
+							</div>
+						</div>
+						<div class="module_con_item module_con_right">
+							<div class="sub_title">数据变化</div>
+							<div class="data_show">
+								用户变动: <div class="mk">{{accountChange}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="SModuleItem SModuleItem_right">
+					<div class="module_title"><h5>访客数据</h5></div>
+					<div class="module_con">
+						<div class="module_con_item module_con_left">
+							<div class="sub_title">点击数</div>
+							<div class="data_show">
+								<span>总点击数:{{clickCount}}</span>
+								<span>关键字:{{keyWord}}</span>
+							</div>
+						</div>
+						<div class="module_con_item module_con_right">
+							<div class="sub_title">访客总数</div>
+							<div class="data_show">
+								<span>当前访客：{{visitorCount}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem">
+					<div class="module_title"><h5>图片数据</h5></div>
+					<div class="module_con">
+						<div id="main">12332131321</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="containers" id="user">
+			<div class="titleItem">
+				<h4>用户管理</h4>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem SModuleItem_left">
+					<div class="module_title"><h5>用户数据</h5></div>
+					<div class="module_con">
+						<div class="module_con_item module_con_left">
+							<div class="sub_title">用户总数</div>
+							<div class="data_show">
+								当前用户:{{accountCount}}
+							</div>
+						</div>
+						<div class="module_con_item module_con_right">
+							<div class="sub_title">数据变化</div>
+							<div class="data_show">
+								用户变动: <div class="mk">{{accountChange}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="SModuleItem SModuleItem_right">
+					<div class="module_title"><h5>访客数据</h5></div>
+					<div class="module_con">
+						<div class="module_con_item module_con_left">
+							<div class="sub_title">点击数</div>
+							<div class="data_show">
+								<span>总点击数:{{clickCount}}</span>
+								<span>关键字:{{keyWord}}</span>
+							</div>
+						</div>
+						<div class="module_con_item module_con_right">
+							<div class="sub_title">访客总数</div>
+							<div class="data_show">
+								<span>当前访客：{{visitorCount}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem">
+					<div class="module_title"><h5>用户列表</h5></div>
+					<div class="module_con user_list">
+						<div class="list_item">
+							<div class="uid markdown">id</div>
+							<div class="username markdown">用户名</div>
+							<div class="userDo markdown">操作一</div>
+							<div class="userDo markdown">操作二</div>
+							<div class="userDo markdown">操作三</div>
+						</div>
+						<div class="list_item" v-for="(item,index) in userList" :key="index" >
+							<div class="uid">{{item.uid}}</div>
+							<div class="username">{{item.uname}}</div>
+							<div class="userDo"><a href="#">封禁</a></div>
+							<div class="userDo"><a href="#">修改权限</a></div>
+							<div class="userDo"><a href="#">删除</a></div>
+						</div>
+						<div class="more_pic">已加载到底部</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="containers" id="picture">
+			<div class="titleItem">
+				<h4 @click="popTip">图片管理</h4>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem SModuleItem_left">
+					<div class="module_title"><h5>图片分类</h5></div>
+					<div class="module_con">
+						<div class="module_con_item module_con_left">
+							<div class="sub_title">种类数</div>
+							<div class="data_show">
+								当前种类:{{categoryCount}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="SModuleItem SModuleItem_right">
+					<div class="module_title"><h5>图片概况</h5></div>
+					<div class="module_con">
+						<div class="module_con_item module_con_left">
+							<div class="sub_title pic_title">图片数据</div>
+							<div class="data_show">
+								<span>图片数:{{pictureCount}}</span>
+								<span>3天内增加数:<div class="mk">+{{recentPicture}}</div></span>
+							</div>
+						</div>
+						<div class="module_con_item module_con_right">
+							<div class="sub_title">图片热度</div>
+							<div class="data_show">
+								<span>累积热度：{{AllHeat}}</span>
+								<span>最高热度：{{MaxHeat}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem">
+					<div class="module_title pic_title">
+						<h5>图片数据</h5>
+						<div class="cSelect">
+							<span>所属类别</span>
+							<select v-model="selectCategory">
+								<option value="0">所有</option>
+								<option v-for="(item,index) in category" :key="index" :value="item.cid">{{item.cname}}</option>
+							</select>
+						</div>
+						<div class="tagSearch">
+							<span>标签搜索</span>
+							<input type="text" v-model="filterTag">
+						</div>
+					</div>
+					<div class="module_con">
+						<div class="module_con user_list">
+							<div class="list_item">
+								<div class="uid markdown">pid</div>
+								<div class="username markdown">推荐</div>
+								<div class="userDo markdown">尺寸</div>
+								<div class="userDo markdown">标签</div>
+								<div class="userDo markdown">操作一</div>
+								<div class="userDo markdown">操作二</div>
+								<div class="userDo markdown">操作三</div>
+							</div>
+							<div class="list_item" v-for="(item,index) in wallpaperData" :key="index" v-if="(item.cid === selectCategory || selectCategory == 0) && (item.tag.search(filterTag) != -1 || filterTag === '' )" >
+								<div class="uid">{{item.pid}}</div>
+								<div class="flag">
+									<select v-model="item.recommended">
+										<option value="0">不推荐</option>
+										<option value="1">推荐</option>
+									</select>
+								</div>
+								<div class="size">
+									<input type="text" v-model="item.size"/>
+								</div>
+								<div class="tag">
+									<input type="text" v-model="item.tag"/>
+								</div>
+								<div class="userDo"><div class="ac"  @click="picMsg(index)">详情</div></div>
+								<div class="userDo"><div class="ac" @click="updatePic(index)">修改</div></div>
+								<div class="userDo"><div class="ac" @click="deletePic(index)">删除</div></div>
+							</div>
+							<div class="list_item" v-if="wallpaperData.length === 0">暂无相关信息</div>
+							<div class="more_pic" @click="morepic">点击加载加载更多</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="containers" id="data">
+			<div class="titleItem">
+				<h4>拓展功能</h4>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem SModuleItem_left">
+					<div class="module_title"><h5>淘图</h5></div>
+					<div class="module_con">
+						<div class="module_con_item module_con_left">
+							<div class="sub_title">数据</div>
+							<div class="data_show">
+								点击总数:289
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="SModuleItem SModuleItem_right">
+					<div class="module_title"><h5>图片推荐</h5></div>
+					<div class="module_con">
+						<div class="module_con_item module_con_left">
+							暂未开通
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem">
+					<div class="module_title"><h5>热词榜</h5></div>
+					<div class="module_con">
+						<div class="module_con user_list">
+							<div class="list_item">
+								<div class="uid markdown">sid</div>
+								<div class="username markdown">关键字</div>
+								<div class="userDo markdown">频次</div>
+							</div>
+							<div class="list_item" v-for="(item,index) in keyWordTop" :key="index" >
+								<div class="uid">{{item.sid}}</div>
+								<div class="username">{{item.keyword}}</div>
+								<div class="userDo">{{item.num}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div class="containers" id="announcement">
+			<div class="titleItem">
+				<h4>公告通知</h4>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem" style="background-color: rgb(214, 216, 216);">
+					<div class="module_title" style="background-color: #fff;"><h5>公告栏</h5></div>
+						<div class="announcement_item" v-for="(item,index) in announcement" :key="index" @click="announcement_show(index)">
+							<span class="tip">{{item.content}}</span>
+							<span class="date">{{item.create_time}}</span>
+						</div>
+						<div class="announcement_item" v-if="announcement.length == 0">当前公告为空</div>
+						<div class="article_menu">
+							<div class="put_article" @click="put_article">公告发表</div>
+							<div class="re_article" @click="put_article">公告重置</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="containers" id="manager">
+			<div class="titleItem">
+				<h4>信息审核</h4>
+			</div>
+			<div class="rowItem">
+				<div class="SModuleItem" style="background-color: rgb(214, 216, 216);">
+					<div class="module_title" style="background-color: #fff;"><h5>用户推荐图片审核</h5></div>
+				<div class="SModuleItem">
+					<div class="module_title pic_title">
+						<h5>图片数据</h5>
+						<div class="picMenu">
+							<span class="selected" @click="sel_1" ref="sel_1" >全部</span>/<span @click="sel_2" ref="sel_2" >未审核</span>
+						</div>
+					</div>
+					<div class="module_con">
+						<div class="module_con user_list">
+							<div class="list_item">
+								<div class="uid markdown">id</div>
+								<div class="username markdown">用户id</div>
+								<div class="userDo markdown">审核状态</div>
+								<div class="userDo markdown">标签</div>
+								<div class="userDo markdown">操作一</div>
+								<div class="userDo markdown">操作二</div>
+								<div class="userDo markdown">操作三</div>
+							</div>
+							<div class="list_item" v-for="(item,index) in userPicList" :key="index" v-if="isRecommend == true || item.recommend == 0">
+								<div class="uid">{{item.id}}</div>
+								<div class="uid">{{item.uid}}</div>
+								<div class="flag">
+									<select v-model="item.recommend">
+										<option value="0">未审核</option>
+										<option value="1">审核通过</option>
+									</select>
+								</div>
+								<div class="tag">
+									<input type="text" v-model="item.tags"/>
+								</div>
+								<div class="userDo"><div class="ac"  @click="pic2Msg(index)">详情</div></div>
+								<div class="userDo"><div class="ac" @click="updatePic1(index)">修改</div></div>
+								<div class="userDo"><div class="ac" @click="deletePic1(index)">删除</div></div>
+							</div>
+							<div class="list_item" v-if="userPicList.length === 0">暂无相关信息</div>
+							<div class="more_pic" @click="morepic">点击加载加载更多</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+
+
+		<div class="pop_bottom" @click="closePop" v-show="popShow">
+
+		</div>
+
+		<div class="pic_msg" ref="msg" v-show="popShow">
+			<div class="msgTitle">图片信息</div>
+			<div class="msgItem img_content">
+				<div class="msgItem_title">图片预览</div>
+				<div class="msgItem_content">
+					<img class="msgItem_Img" :src="tempImg.sm_src"/>
+				</div>
+			</div>
+			<div class="msgItem" v-if=" tempImg.pid != '' ">
+				<div class="msgItem_title">id</div>
+				<div class="msgItem_content">{{tempImg.pid}}</div>
+			</div>
+			<div class="msgItem" v-else>
+				<div class="msgItem_title">id</div>
+				<div class="msgItem_content">{{tempImg.id}}</div>
+			</div>
+			<div class="msgItem">
+				<div class="msgItem_title">略缩图链接</div>
+				<div class="msgItem_content imgUrl" @click="copyUrl($event)">{{tempImg.sm_src}}</div>
+			</div>
+			<div class="msgItem">
+				<div class="msgItem_title">链接</div>
+				<div class="msgItem_content imgUrl" @click="copyUrl($event)">{{tempImg.src}}</div>
+			</div>
+			<div class="msgItem" v-if=" tempImg.tag != ''">
+				<div class="msgItem_title">标签</div>
+				<div class="msgItem_content" alt="点击复制">{{tempImg.tag}}</div>
+			</div>
+			<div class="msgItem" v-else>
+				<div class="msgItem_title">标签</div>
+				<div class="msgItem_content" alt="点击复制">{{tempImg.tags}}</div>
+			</div>
+			<div class="msgItem" v-if="tempImg.cid != '' ">
+				<div class="msgItem_title">所属类别</div>
+				<div class="msgItem_content">{{tempImg.cid}}</div>
+			</div>
+			<div class="none"></div>
+		</div>
+		<div class="pop_bottom" @click="closePop" v-show="popShow">
+		
+		</div>
+		
+		
+
+		<div class="pop_tip" ref="tip">图片超链接复制成功</div>
+		<div class="announcement_msg" v-show="announcement_flag">
+			<h4>
+				{{current_announcement.title}}
+				<div class="close_btn" @click="announcement_show(0)">x</div>
+			</h4>
+			<span class="announcement_content">{{current_announcement.content}}</span>
+			<span class="announcement_date">{{current_announcement.create_time}}</span>
+		</div>
+		<div class="article_from" v-show="article_flag">
+			<div class="topbar">
+				<div class="a_close" @click="put_article"></div>
+			</div>
+			<from class="a_from">
+				<h3>新建通知表</h3>
+				<div class="from_group a_title">
+					<span>通知标题</span>&nbsp;
+					<input v-model="temp_announcement.title" class="a_item"/>
+				</div>
+				<div class="from_group a_con">
+					<span class="a_content_tag">通知内容</span>&nbsp;
+					<textarea v-model="temp_announcement.content" name="annomounce_content" class="a_content" style="resize: none;"></textarea>
+				</div>
+				<div class="from_group a_con">
+					<input class="a_submit" type="submit" @click="insert_announcement" value="提交"/>
+				</div>
+			</from>
+		</div>
+	</div>
+	<script src="./js/manager.js"></script>
+	</body>
+</html>

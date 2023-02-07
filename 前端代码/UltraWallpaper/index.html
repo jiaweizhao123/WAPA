@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta charset="utf-8"  name="description" content="ultraer壁纸网站，简单的壁纸搬运工，浏览一下，换张壁纸，换个心情。"/>
+		<meta name="keywords" content="壁纸 动漫 风景 唯美 游戏"/>
+		 <meta http-equiv='content-language' content='zh_CN'> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="content-Type" content="=text/html; charset=utf-8"/>
+		<title>Ultra-简单的壁纸网站</title>
+		<link rel="icon" href="img/title.ico" type="image/x-icon">
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.js" type="text/jscript" charset="UTF-8"></script>
+		<script src="js/axios.min.js"></script>
+		<link href="css/bootstrap.css" rel="stylesheet"/>
+		<link href="./css/index.css" rel="stylesheet"/>
+	</head>
+	<script>
+		setTimeout(function(){
+			document.body.style.opacity = '1';
+		},100);
+	</script>
+	<body>
+		<div id="app" @click="close_category($event)">
+			<!-- 顶部导航栏 -->
+			<div id="topMenu">
+				<ul class="top_ul">
+					<h1 class="title">Ultra壁纸</h1>
+					<form id="top_form" method="post" @submit.prevent="search($event)">
+						<input type="text"  name="keyword" id="search_input" placeholder="请输入关键字">
+						<button id="search">点击搜索</button>
+					</form>
+					<li class="isSelected select" @Click="selected_1($event)">首页</li>
+					<li class="select" @Click="selected_2($event)">最新壁纸</li>
+					<li class="select" @Click="selected_3($event)">最热壁纸</li>
+					<li class="select category_menu" @Click.stop="selected_4($event)">分类
+						<ul class="category_list" v-show="category_flag">
+							<li class="category_li" v-for="(item,index) in category_array" :key="index" @click.stop="select_category(index)">
+								{{category_array[index].cname}}
+							</li>
+						</ul>
+					</li>
+					<li class="select" @Click="selected_5($event)">淘图</li>
+					<li class="select" @Click="selected_6($event)">关于我们</li>
+				</ul>
+			</div>
+			<div id="contain" v-show="img_flag" class="container-fluid">
+				<div class="min-container">
+				<div class="img_contain"  v-if="flush" @mouseover="mouseOver($event,index)" @mouseleave="mouseLeave($event,index)" v-for="(item,index) in img_array" :key="index">
+					<div class="img_item" v-if="index <= count">
+						<img :src="img_array[index].sm_src"  @click="imgClick(index)" alt="加载中">
+					</div>
+					<ul class="img_do">
+						<li>
+							<img src="img/interest.png" alt="加载中" @click="love_increase(index)"/>
+						</li>
+						<li>
+							<img src="img/download.png" alt="加载中" @click="download(index)"/>
+						</li>
+					</ul>
+				</div>
+				<img v-show="pop_flag" @click="imgClick()" alt="加载中" :src="temp_img.src" class="pop_img" id="pop_img"/>
+				<div class="footer">
+					<h3 class="footer_tip">已经到底啦，快去其他部分看看吧</h3>
+				</div>
+				</div>
+				<div class="phone_next" @click="phone_next($event)">点击加载更多</div>
+				<div class="bottom_one">
+				    Copyright©2021 Ultra壁纸
+				    <a href="https://beian.miit.gov.cn">赣ICP备2021003437号</a>
+				    <img src="img/备案.png" alt="加载中" class="beian">
+				    <a href="http://www.beian.gov.cn/portal/recordQuery">赣公网安备36010602000123号</a>
+				    作者
+				    <a href="https://www.cnblogs.com/sazkuyo/">@sazkuyo</a>
+				    邮箱 <a href="mailto:sazkuyo@163.com">sazkuyo@163.com</a>
+				    <br>
+				</div>
+			</div>
+			<div v-show="about_flag">
+				<div id="about">
+				<h3>开发日志</h3>
+				<div class="product_log">
+					<h5>2021.11.7</h5>
+					<p>1、网站主体设计已经完成，新增了淘图功能。</p>
+					<p>2、目前在考虑图片加速方案，在压缩成本的前提下，最终还是决定采用对象存储进行优化。</p>
+					<p>3、下期更新目标就是页面美化了，在页面美化同时预计还会额外添加主题切换功能。</p>
+				</div>
+				<div class="product_log">
+					<h5>2021.10.31</h5>
+					<p>网站大体设计完成，但还是存在很多缺陷，代码还是冗杂待精简。</p>
+				</div>
+				<div class="product_log">
+					<h5>2021.10.28</h5>
+					<p>完成了网站的初步前端页面构建，暂未实现前后端交互。</p>
+				</div>
+				</div>
+				<div class="bottom_one about_bottom">
+				    Copyright©2021 Ultra壁纸
+				    <a href="https://beian.miit.gov.cn">赣ICP备2021003437号</a>
+				    <img src="img/备案.png" alt="加载中" class="beian">
+				    <a href="http://www.beian.gov.cn/portal/recordQuery">赣公网安备36010602000123号</a>
+				    作者
+				    <a href="https://www.cnblogs.com/sazkuyo/">@sazkuyo</a>
+				    邮箱 <a href="mailto:sazkuyo@163.com">sazkuyo@163.com</a>
+				    <br>
+				</div>
+			</div>
+			<div id="findNew" v-show="find_flag">
+				<img :src="img.src" alt="加载中" class="back_img">
+				<div class="btns" @click="openMenu()">展开</div>
+				<div class="rightMenu">	
+					<ul>
+						<li class="menu_li top_li" @click="getImage()"><img src="img/toUp.png" /></li>
+						<li class="menu_li" @click="favorite()"><img src="img/love.png" /></li>
+						<li class="menu_li" @click="find_download()"><img src="img/download2.png" /></li>
+						<li class="menu_li" @click="encoder()"><img src="img/toBase64.png" /></li>
+						<li class="menu_li bottom_li" @click="getImage()"><img src="img/toDown.png" /></li>
+					</ul>
+				</div>
+				<div class="footer_tip2">换张壁纸，换个心情。</div>
+			</div>
+			<div class="toTop" @click="toTop()">
+				<img alt="加载中" src="img/top.png"/>
+			</div>
+		</div>
+		
+
+		<!-- 主要js文件 -->
+		<script src="js/index.js"></script>
+	</body>
+</html>

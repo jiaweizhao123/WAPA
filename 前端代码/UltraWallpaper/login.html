@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<link href="css/login.css" rel="stylesheet"/>
+		<script src="js/axios.min.js"></script>
+		<link href="css/bootstrap.css" rel="stylesheet"/>
+	</head>
+	<body>
+		<div id="app">
+			<div id="mode_selected">
+				<div class="selected selected_disable" id="id_selected" ref="id_selected" @click="change_mode($event)">ID登录</div>
+				<div class="selected" id="email_selected" ref="email_selected"  @click="change_mode($event)">邮箱登录</div>
+			</div>
+			<div id="login">
+				<div id="login_id" ref="login_id">
+					<form class="login_form" @submit.prevent="loginById($event)">
+						<div class="form-group">
+						    <label for="exampleInputName2">账号</label>
+						    <input type="text" v-model="uidForm.uid" name="uid" style="height: 50px;" class="form-control" id="id" placeholder="请输入账号">
+						  </div>
+						  <div class="form-group">
+						      <label for="exampleInputName2">密码</label>
+						      <input type="password" v-model="uidForm.pwd" name="pwd" style="height: 50px;" class="form-control" id="pwd" placeholder="请输入密码">
+						   </div>
+						   <div class="form-group">
+						    <div class="checkbox">
+						           <label>
+						             <input type="checkbox" width="70px"> &nbsp; 始终保存密码至本地
+						           </label>
+						    </div>
+							</div>
+							<div class="form-group">
+								<a href="#" class="forget_password">忘记密码？点击我</a>
+							</div>
+							<button type="submit" class="btn btn-primary submit" style="width: 150px;height: 60px;margin-right: 12px;">登录</button>
+							<div class="form_foot">
+								<div @click="register()">点击注册</div>
+								<label>暂未拥有账号？</label>	
+							</div>
+					</form>
+				</div>
+				<div id="login_email" ref="login_email">
+					<form class="login_form" @submit.prevent="loginByEmail($event)">
+						<div class="form-group">
+						    <label for="exampleInputName2">邮箱</label>
+						    <input  type="text" style="height: 50px;" class="form-control" id="id" name="email" v-model="emailForm.email" placeholder="请输入邮箱">
+						  </div>
+						  <div class="form-group">
+						      <label for="exampleInputName2">密码</label>
+						      <input name="pwd"  v-model="emailForm.pwd" type="password" style="height: 50px;" class="form-control" id="pwd" placeholder="请输入密码">
+						   </div>
+						   <div class="form-group">
+						    <div class="checkbox">
+						           <label>
+						             <input type="checkbox" width="70px"> &nbsp; 始终保存密码至本地
+						           </label>
+						    </div>
+							</div>
+							<div class="form-group">
+								<a href="#" class="forget_password">忘记密码？点击我</a>
+							</div>
+							<button type="submit" class="btn btn-primary submit" style="width: 150px;height: 60px;margin-right: 12px;">登录</button>
+							<div class="form_foot">
+								<div @click="register()">点击注册</div>
+								<label>暂未拥有账号？</label>	
+							</div>
+					</form>
+				</div>
+			</div>
+			<div class="pop_bk" v-show="out_flag" @click="close_pop()" ref="pop_selectRole"></div>
+			<div class="pop_update" v-show="form_out">
+				<form class="form-horizontal register_form" @submit.prevent="register_form($event)">
+					 <div class="form-group">
+					    <label  class="col-sm-4 control-label">用户名</label>
+					    <div class="col-sm-12">
+					      <input type="text" v-model="registerForm.uname" class="form-control" name="uname">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					     <label  class="col-sm-4 control-label">密码</label>
+					     <div class="col-sm-12">
+					       <input type="password" @change="auto_checkPwd()" v-model="registerForm.pwd" class="form-control" name="pwd">
+					     </div>
+					   </div>
+					   <div class="form-group">
+					      <label  class="col-sm-5 control-label">密码验证</label>
+					      <div class="col-sm-12">
+					        <input type="password" @change="auto_checkPwd()"  ref="re_pwd" v-model="registerForm.rePwd" class="form-control" name="re_pwd">
+					      </div>
+					    </div>
+						<div class="form-group">
+						   <label  class="col-sm-5 control-label">邮箱</label>
+						   <div class="col-sm-12">
+						     <input type="text" @change="auto_checkEmail()"  ref="email" v-model="registerForm.email" class="form-control" name="re_pwd">
+						   </div>
+						 </div>
+						 <div class="form-group">
+						    <label  class="col-sm-5 control-label">验证码</label>
+						    <div class="col-sm-12 col-xs-3" style="display: flex;">
+						      <input type="text" v-model="registerForm.code" class="form-control" name="re_pwd">
+								<div class="getCheckCode" @click="getCheckCode()" ref="getCheckCode" >发送验证码</div>
+							</div>
+						 </div>
+						  
+					   <input class="btn btn-primary col-sm-10 form_submit" type="submit"  style="height: 50px; margin-left: 35px; margin-top:10px;margin-bottom: 10px;" value="注册">
+				</form>
+			</div>
+		</div>
+		<script src="js/login.js"></script>
+	</body>
+</html>

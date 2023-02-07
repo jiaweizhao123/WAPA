@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.js" type="text/jscript" charset="UTF-8"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="https://unpkg.com/qiniu-js/dist/qiniu.min.js"></script>
+		<link href="css/bootstrap.css" rel="stylesheet"/>
+		<link href="css/upload.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="app" class="container">
+			<form class="upload_form"  method="post" @submit.prevent="img_upload($event)">
+				<h5>图片上传表</h5>
+				<div class="fileUpload">
+					<label class="file_tip">暂未选中文件</label>
+					<input type="file" name="img" accept="image/*" id="exampleInputFile" @change="file_select($event)" class="fileUpload file_item">
+				</div>
+				<select class="c_Select">
+					<option 
+					v-for="(item,index) in this.category"
+					:key="index" :value="item.cid">
+						{{item.cname}}
+					</option>
+				</select>
+				<h6>图片标签</h6>
+				<div class="tag_contain">
+					<input class="tags" type="text" v-for="index in tag_count">
+					<div style="display: inline-block;">
+						<div class="add" @click="add_tag(1)" >+</div>
+						<div class="add" @click="add_tag(0)" >-</div>
+					</div>
+				</div>
+				<div class="input_group">
+					<span>电脑壁纸</span><input ref="pc_select" type="radio" class="flag" value="1" name="type" checked="checked" @click="changeCategory(0)" /><br />
+				</div>
+				<div class="input_group">
+					<span>手机壁纸</span><input @click="changeCategory(1)" type="radio" class="flag" value="2" name="type" /><br />
+				</div>
+				<button type="submit" class="btn btn-primary submit_btn">提交</button>
+			</form>
+		</div>
+		<script src="js/upload.js"></script>
+	</body>
+</html>

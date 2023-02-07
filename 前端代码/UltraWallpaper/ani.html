@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			body{
+				background-color: #000;
+			}
+			.container{
+				width: 16vw;
+				height: 40vh;
+				/* border: 1px solid #fff; */
+				position: absolute;
+				top:0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+				
+			}
+			.stroke{
+				display: inline-block;
+				width: 4vw;
+				height: 0vh;
+				border-radius: 4vh;
+				margin: 0px 1vw;
+				position: absolute;
+				animation-iteration-count: infinite;
+			}
+			.stroke-1{
+				background-color: rgb(144, 26, 223);
+			}
+			.stroke-2{
+				background-color: rgb(13, 105, 218);
+				left:5vw;
+			}
+			.stroke-3{
+				background-color: #fff;
+				left:10vw;
+			}
+			@keyframes load{
+				0%{height: 40vh;}
+				40%{height: 20vh;transform: translateY(10vh);}
+				50%{height: 4vh;transform: translateY(18.5vh);}
+				90%{height: 20vh;transform: translateY(10vh);}
+				100%{height: 40vh;}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="stroke-1 stroke"></div>
+			<div class="stroke-2 stroke"></div>
+			<div class="stroke-3 stroke"></div>
+		</div>
+		<script>
+			var l1 = document.getElementsByClassName("stroke-1");
+			var l2 = document.getElementsByClassName("stroke-2");
+			var l3 = document.getElementsByClassName("stroke-3");
+			l1[0].style.animation = "load 1s";
+			l1[0].style.animationIterationCount = 'infinite';
+			setTimeout(()=>{
+				l2[0].style.animation = "load 1s";
+				l2[0].style.animationIterationCount = 'infinite';
+			},100);
+			setTimeout(()=>{
+				l3[0].style.animation = "load 1s";
+				l3[0].style.animationIterationCount = 'infinite';
+			},400);
+		</script>
+	</body>
+</html>

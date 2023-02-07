@@ -1,0 +1,174 @@
+body {
+	background: url(../img/bk2.jpg) no-repeat;
+	background-size: cover;
+}
+
+#login {
+	display: flex;
+	width: 700px;
+	height: 500px;
+	flex-direction: column;
+	margin: 0px auto;
+	background-color: rgba(49, 241, 193, 0.3);
+	border-radius: 0px 0px 20px 20px;
+	border-top: 3px dashed #000;
+	overflow: hidden;
+}
+
+#mode_selected {
+	display: flex;
+	width: 700px;
+	height: 120px;
+	padding: 20px 120px;
+	margin: 0px auto;
+	margin-top: 80px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: rgba(49, 241, 193, 0.3);
+	border-radius: 20px 20px 0px 0px;
+}
+
+.selected {
+	width: 230px;
+	height: 70px;
+	background-color: #1c90d8;
+	color: #fff;
+	font-size: 1.4em;
+	border: none;
+	line-height: 70px;
+	text-align: center;
+	cursor: pointer;
+}
+
+#id_selected {
+	border-radius: 40px 0px 0px 40px;
+}
+
+#email_selected {
+	border-radius: 0px 40px 40px 0px;
+}
+
+.selected_disable {
+	color: #636363;
+	background-color: #ffffff;
+	cursor: not-allowed;
+}
+
+label {
+	font-size: 1.3em;
+	color: #fff;
+}
+
+.login_form {
+	width: 696px;
+	height: 470px;
+	padding: 30px 30px;
+	padding-bottom: 10px;
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.forget_password {
+	font-size: 1.1em;
+	color: #00a3fa;
+}
+
+#login_id {
+	position: relative;
+	transition: all 0.3s;
+}
+
+#login_email {
+	position: relative;
+	transition: all 0.3s;
+	top: -479px;
+	left: 705px;
+}
+
+.forget_password:hover {
+	color: #00a3fa;
+	text-decoration: none;
+}
+
+.submit {
+	position: absolute;
+	right: 15px;
+}
+
+.form_foot {
+	width: 698px;
+	display: flex;
+	flex-direction: row-reverse;
+	height: 80px;
+	border-radius: 0px 0px 20px 20px;
+	text-align: right;
+	font-size: 1em;
+	line-height: 70px;
+	padding: 20px 50px;
+	margin-top: 70px;
+}
+
+.form_foot div {
+	width: 100px;
+	height: 50px;
+	line-height: 50px;
+	cursor: pointer;
+	text-align: center;
+	border: none;
+	border-radius: 10px;
+	margin: 0px 10px;
+	margin-top: 10px;
+	font-size: 1.1em;
+	color: #0094d8;
+	background-color: #fff;
+}
+
+.pop_bk {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: hsla(0, 0%, 0%, 0.7);
+}
+
+.pop_update {
+	position: fixed;
+	width: 500px;
+	border: 1px solid #000;
+	padding: 10px;
+	left: 50%;
+	background-color: #fff;
+	top: 34%;
+	margin-left: -200px;
+	margin-top: -180px;
+	padding-top: 30px;
+}
+
+.register_form {
+	padding: 10px 30px;
+}
+
+.control-label {
+	color: #000;
+}
+
+.getCheckCode {
+	width: 170px;
+	height: 40px;
+	background-color: #0094D8;
+	color: #fff;
+	border: none;
+	margin-left: 25px;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

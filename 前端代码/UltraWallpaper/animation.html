@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#canvas_borded{
+				position: fixed;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas_borded"></canvas>
+	</body>
+	<script>
+		var canvas = document.getElementById('canvas_borded');
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		var ctx = canvas.getContext("2d");
+		function draw(){
+		    if(!canvas.getContext) return;
+		    
+		    ctx.fillStyle = "rgb(200,0,0)";
+		      //绘制矩形
+		    ctx.fillRect (0, 0, 55, 50);
+		}
+		// var flag = 1/2;
+		// var refreshIntervalId;
+		// var x,y;
+		// var size =0;
+		// var count = 0;
+		// function clickEvent(){
+		// 	ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); 
+		// 	var size =20;
+		// 	console.log(Math.PI*flag);
+		// 	if(!canvas.getContext) return;
+		// 	ctx.beginPath();
+		// 	console.log(flag);
+		// 	ctx.arc(x,y,size,0,Math.PI*flag,false);
+		// 	flag += 1/2;
+		// 	ctx.stroke();
+		// 	ctx.restore();
+		// 	if(flag >= 2.3){
+		// 		clearInterval(refreshIntervalId);
+		// 		flag = 1/2;
+		// 	}
+		// }
+		// var begin = Math.random()*window.innerWidth;
+		// console.log(begin,window.innerWidth);
+		// ctx.strokeStyle = 'white';
+		// ctx.beginPath();		
+		// ctx.moveTo(begin,0);
+		// ctx.lineTo(begin-50,50);
+		// ctx.stroke();
+		// function starDown(){
+		// 	var begin = Math.random()*window.innerWidth;
+		// 	var temp = 1;
+		// 	var tx,ty,t1,t2;
+		// 	tx = begin;
+		// 	ty = 0;
+		// 	console.log(begin,window.innerWidth);
+		// 	ctx.strokeStyle = 'white';
+		// 	ctx.beginPath();		
+		// 	ctx.moveTo(tx,ty);
+		// 	ctx.lineTo(tx-50*temp,temp*50);
+		// 	ctx.stroke();
+		// 	t1 = tx;
+		// 	t2 = ty;
+		// 	refreshIntervalId2 = setInterval(function(){
+		// 		ctx.fillStyle = 'red';
+		// 		console.log(t1-50,t2,50,50);
+		// 		ctx.clearRect(t1-50,t2,50,50);
+		// 		ctx.beginPath();
+		// 		ctx.moveTo(tx-50*temp,temp*50);
+		// 		t1 = tx-50*temp;
+		// 		t2 = temp*50;
+		// 		temp++;
+		// 		ctx.lineTo(tx-50*temp,temp*50);
+		// 		ty = temp*50;
+		// 		ctx.stroke();
+				
+		// 	},100);
+		// }
+		// setInterval(starDown,500);
+		// function clickEvent(){
+		// 	var ctx = canvas.getContext("2d");
+		// 	var begin = Math.random()*window.innerWidth;
+		// 	var temp = 2;
+		// 	console.log(begin,window.innerWidth);
+		// 	ctx.strokeStyle = 'white';
+		// 	ctx.beginPath();		
+		// 	ctx.moveTo(begin,0);
+		// 	ctx.lineTo(begin-50,50);
+		// 	ctx.stroke();
+		// 	refreshIntervalId2 = setInterval(function(){
+		// 		alert('haha');
+		// 		ctx.moveTo(begin-50,50);
+		// 		ctx.lineTo(begin-50*temp,50*temp);
+		// 		temp += 1;
+		// 		if(begin-50<0||50*temp>=window.innerHeight){
+		// 			clearInterval(refreshIntervalId2);
+		// 		}
+		// 	},500);
+		// }
+		
+	</script>
+</html>
